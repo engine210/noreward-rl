@@ -16,54 +16,23 @@ This is a tensorflow based implementation for our [ICML 2017 paper on curiosity-
         Year = {2017}
     }
 
-### 1) Installation and Usage
-1.  This code is based on [TensorFlow](https://www.tensorflow.org/). To install, run these commands:
-  ```Shell
-  # you might not need many of these, e.g., fceux is only for mario
-  sudo apt-get install -y python-numpy python-dev cmake zlib1g-dev libjpeg-dev xvfb \
-  libav-tools xorg-dev python-opengl libboost-all-dev libsdl2-dev swig python3-dev \
-  python3-venv make golang libjpeg-turbo8-dev gcc wget unzip git fceux virtualenv \
-  tmux
+### 1) Usage
+This repo is a modified version of the original implementation.
+Only doom envorinment is included.
+Here we use A2C instead of A3C.
+Also, the original doom envorinment is too old. I use ViZDoom instead.
+I keep the original model structure, but remove a lot of flag about the experiment settings.
 
-  # install the code
-  git clone -b master --single-branch https://github.com/pathak22/noreward-rl.git
-  cd noreward-rl/
-  virtualenv curiosity
-  source $PWD/curiosity/bin/activate
-  pip install numpy
-  pip install -r src/requirements.txt
-  python curiosity/src/go-vncdriver/build.py
+This version is tested on the below environment:
+* Ubuntu 18.04
+* Tensorflow==1.15
+* vizdoom==1.1.8
 
-  # download models
-  bash models/download_models.sh
+To train the model.
+```
+python main.py
+```
 
-  # setup customized doom environment
-  cd doomFiles/
-  # then follow commands in doomFiles/README.md
-  ```
-
-2. Running demo
-  ```Shell
-  cd noreward-rl/src/
-  python demo.py --ckpt ../models/doom/doom_ICM
-  python demo.py --env-id SuperMarioBros-1-1-v0 --ckpt ../models/mario/mario_ICM
-  ```
-
-3. Training code
-  ```Shell
-  cd noreward-rl/src/
-  # For Doom: doom or doomSparse or doomVerySparse
-  python train.py --default --env-id doom
-
-  # For Mario, change src/constants.py as follows:
-  # PREDICTION_BETA = 0.2
-  # ENTROPY_BETA = 0.0005
-  python train.py --default --env-id mario --noReward
-
-  xvfb-run -s "-screen 0 1400x900x24" bash  # only for remote desktops
-  # useful xvfb link: http://stackoverflow.com/a/30336424
-  python inference.py --default --env-id doom --record
-  ```
 
 ### 2) Other helpful pointers
 - [Paper](https://pathak22.github.io/noreward-rl/resources/icml17.pdf)
